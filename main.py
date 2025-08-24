@@ -96,8 +96,9 @@ class LaserSearchWindow(Gtk.ApplicationWindow):
             button.flat:hover { \
                 background-color: #3337; \
             } \
-            label.white_text { \
+            label.custom_text { \
                 color: #EEE; \
+                font-size: 10px; \
             }")
         Gtk.StyleContext.add_provider_for_display(display, css_provider, Gtk.STYLE_PROVIDER_PRIORITY_USER)
         self.app_info_monitor = Gio.AppInfoMonitor.get()
@@ -156,7 +157,7 @@ class LaserSearchWindow(Gtk.ApplicationWindow):
             app_button.command = command
             app_button.set_tooltip_text(app_name)
             app_label = Gtk.Label(label=app_name)
-            app_label.add_css_class("white_text")
+            app_label.add_css_class("custom_text")
             app_label.set_ellipsize(Pango.EllipsizeMode.END)
             app_label.set_max_width_chars(7)
             app_button_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
