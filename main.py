@@ -98,7 +98,12 @@ class LaserSearchWindow(Gtk.ApplicationWindow):
             } \
             label.custom_text { \
                 color: #EEE; \
-                font-size: 10px; \
+                font-size: 12px; \
+            } \
+            image.custom_size { \
+                -gtk-icon-transform: scale(1.7); \
+                margin-bottom: 20px; \
+                padding-top: 15px; \
             }")
         Gtk.StyleContext.add_provider_for_display(display, css_provider, Gtk.STYLE_PROVIDER_PRIORITY_USER)
         self.app_info_monitor = Gio.AppInfoMonitor.get()
@@ -168,7 +173,7 @@ class LaserSearchWindow(Gtk.ApplicationWindow):
             app_button.add_css_class("flat")
 
             image = Gtk.Image()
-            image.set_margin_bottom(7)
+            image.add_css_class("custom_size")
             image.set_icon_size(Gtk.IconSize.LARGE)
             icon = app_info.get_icon()
             if icon:
