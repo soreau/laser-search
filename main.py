@@ -81,7 +81,7 @@ class LaserSearchWindow(Gtk.ApplicationWindow):
         self.add_css_class("laser_search")
         display = self.get_display()
         css_provider = Gtk.CssProvider()
-        css_provider.load_from_data("window.laser_search { background-color: rgba(0, 0, 0, 0.5); }")
+        css_provider.load_from_data("window.laser_search { background-color: rgba(0, 0, 0, 0.5); } button.flat { border-width: 0; background-image: none; background-color: transparent; }")
         Gtk.StyleContext.add_provider_for_display(display, css_provider, Gtk.STYLE_PROVIDER_PRIORITY_USER)
         self.app_info_monitor = Gio.AppInfoMonitor.get()
         self.app_info_monitor.connect("changed", self.populate_menu_entries)
@@ -145,6 +145,7 @@ class LaserSearchWindow(Gtk.ApplicationWindow):
             app_button_box.append(app_label)
             app_button.set_child(app_button_box)
             app_button.set_has_frame(False)
+            app_button.add_css_class("flat")
 
             image = Gtk.Image()
             image.set_icon_size(Gtk.IconSize.LARGE)
