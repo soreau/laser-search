@@ -66,12 +66,14 @@ class LaserSearchWindow(Gtk.ApplicationWindow):
         main_layout.set_halign(Gtk.Align.CENTER)
         self.search_entry = Gtk.SearchEntry()
         self.search_entry.set_size_request(700, 50)
+        self.search_entry.set_margin_bottom(25)
         self.search_entry.connect("search-changed", self.laser_search_changed)
         self.search_entry.connect("activate", self.laser_activate)
         self.search_entry.connect("stop-search", self.laser_search_stop)
         main_layout.append(self.search_entry)
         self.app_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
         self.app_box.set_halign(Gtk.Align.CENTER)
+        self.app_box.set_spacing(10)
         main_layout.append(self.app_box)
         hbox = Gtk.CenterBox()
         hbox.set_hexpand(True)
@@ -88,7 +90,7 @@ class LaserSearchWindow(Gtk.ApplicationWindow):
             button.flat { \
                 border-width: 0; \
                 background-image: none; \
-                background-color: transparent; \
+                background-color: #3337; \
             } \
             label.white_text { \
                 color: #EEE; \
@@ -154,6 +156,7 @@ class LaserSearchWindow(Gtk.ApplicationWindow):
             app_label.set_ellipsize(Pango.EllipsizeMode.END)
             app_label.set_max_width_chars(7)
             app_button_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
+            app_button_box.set_size_request(50, -1)
             app_button_box.append(app_label)
             app_button.set_child(app_button_box)
             app_button.set_has_frame(False)
