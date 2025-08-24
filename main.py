@@ -90,6 +90,10 @@ class LaserSearchWindow(Gtk.ApplicationWindow):
             button.flat { \
                 border-width: 0; \
                 background-image: none; \
+                background-color: transparent; \
+                transition: background-color 0.3s ease-in-out; \
+            } \
+            button.flat:hover { \
                 background-color: #3337; \
             } \
             label.white_text { \
@@ -163,6 +167,7 @@ class LaserSearchWindow(Gtk.ApplicationWindow):
             app_button.add_css_class("flat")
 
             image = Gtk.Image()
+            image.set_margin_bottom(7)
             image.set_icon_size(Gtk.IconSize.LARGE)
             icon = app_info.get_icon()
             if icon:
