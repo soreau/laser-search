@@ -83,7 +83,7 @@ class LaserSearchWindow(Gtk.ApplicationWindow):
         css_provider = Gtk.CssProvider()
         css_provider.load_from_data(" \
             window.laser_search { \
-                background-color: rgba(0, 0, 0, 0.5); \
+                background-color: rgba(0, 0, 0, 0.75); \
             } \
             button.flat { \
                 border-width: 0; \
