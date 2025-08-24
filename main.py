@@ -65,6 +65,8 @@ class LaserSearchWindow(Gtk.ApplicationWindow):
         self.search_entry = Gtk.SearchEntry()
         self.search_entry.set_size_request(700, 50)
         self.search_entry.set_margin_bottom(25)
+        self.search_entry.add_css_class("custom_text")
+        self.search_entry.add_css_class("large-icons")
         self.search_entry.connect("search-changed", self.laser_search_changed)
         self.search_entry.connect("activate", self.laser_activate)
         self.search_entry.connect("stop-search", self.laser_search_stop)
@@ -97,6 +99,11 @@ class LaserSearchWindow(Gtk.ApplicationWindow):
             label.custom_text { \
                 color: #EEE; \
                 font-size: 12px; \
+            } \
+            entry.custom_text { \
+                color: #444; \
+                font-size: 30px; \
+                font-weight: bold; \
             } \
             image.custom_size { \
                 -gtk-icon-transform: scale(1.7); \
