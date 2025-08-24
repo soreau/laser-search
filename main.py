@@ -24,8 +24,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-import subprocess
-
 from ctypes import CDLL
 CDLL('libgtk4-layer-shell.so')
 
@@ -140,11 +138,11 @@ class LaserSearchWindow(Gtk.ApplicationWindow):
         if len(self.app_box.observe_children()) != 1:
             return
         button = self.app_box.get_first_child()
-        subprocess.Popen(button.command, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        button.launch()
         self.app.quit()
 
     def app_button_clicked(self, button):
-        subprocess.Popen(button.command, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        button.launch()
         self.app.quit()
 
     def populate_menu_entries(self, app_info_monitor=None):
@@ -159,7 +157,7 @@ class LaserSearchWindow(Gtk.ApplicationWindow):
             app_name = app_info.get_display_name()
             command = app_info.get_executable()
             app_button = LaserButton(app_name, app_info.get_description(), command)
-            app_button.command = command
+            app_button.launch = app_info.launch
             app_button.set_tooltip_text(app_name)
             app_label = Gtk.Label(label=app_name)
             app_label.add_css_class("custom_text")
