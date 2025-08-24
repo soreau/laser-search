@@ -24,6 +24,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
+import subprocess
+
 from ctypes import CDLL
 CDLL('libgtk4-layer-shell.so')
 
@@ -44,6 +46,8 @@ class LaserButton(Gtk.Button):
 class LaserSearchWindow(Gtk.ApplicationWindow):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
+        self.app = self.get_application()
 
         self.set_title("Laser Search")
 
@@ -88,7 +92,7 @@ class LaserSearchWindow(Gtk.ApplicationWindow):
         self.search_entry.grab_focus()
 
     def laser_search_stop(self, laser_search_stop):
-        exit(0)
+        self.app.quit()
 
     def laser_search_changed(self, search_entry):
         while True:
@@ -113,12 +117,12 @@ class LaserSearchWindow(Gtk.ApplicationWindow):
         if len(self.app_box.observe_children()) != 1:
             return
         button = self.app_box.get_first_child()
-        button.execute()
-        exit(0)
+        subprocess.Popen(button.command, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        self.app.quit()
 
-    def app_button_clicked(self, app_button):
-        app_button.execute()
-        exit(0)
+    def app_button_clicked(self, button):
+        subprocess.Popen(button.command, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        self.app.quit()
 
     def populate_menu_entries(self, app_info_monitor=None):
         app_infos = Gio.AppInfo.get_all()
@@ -132,7 +136,7 @@ class LaserSearchWindow(Gtk.ApplicationWindow):
             app_name = app_info.get_display_name()
             command = app_info.get_executable()
             app_button = LaserButton(app_name, app_info.get_description(), command)
-            app_button.execute = app_info.launch
+            app_button.command = command
             app_button.set_tooltip_text(app_name)
             app_label = Gtk.Label(label=app_name)
             app_label.set_ellipsize(Pango.EllipsizeMode.END)
