@@ -150,7 +150,15 @@ class LaserSearchWindow(Gtk.ApplicationWindow):
                 continue
             app_name = app_info.get_display_name()
             command = app_info.get_executable()
-            app_button = LaserButton(app_name, app_info.get_description(), command)
+            description = app_info.get_description()
+            button_found = False
+            for button in self.cached_buttons:
+                if button.name == app_name and button.desc == description and button.exe == command:
+                    button_found = True
+                    break
+            if button_found:
+                continue
+            app_button = LaserButton(app_name, description, command)
             app_button.launch = app_info.launch
             app_button.set_tooltip_text(app_name)
             app_label = Gtk.Label(label=app_name)
