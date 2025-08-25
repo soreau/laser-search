@@ -24,13 +24,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from ctypes import CDLL
-CDLL('libgtk4-layer-shell.so')
-
 import gi
 gi.require_version("Gtk", "4.0")
-gi.require_version("Gtk4LayerShell", "1.0")
-from gi.repository import Gtk, Gdk, Gio, Pango, Gtk4LayerShell
+from gi.repository import Gtk, Gdk, Gio, Pango
 
 
 class LaserButton(Gtk.Button):
@@ -48,16 +44,6 @@ class LaserSearchWindow(Gtk.ApplicationWindow):
         self.app = self.get_application()
 
         self.set_title("Laser Search")
-
-        Gtk4LayerShell.init_for_window(self)
-        Gtk4LayerShell.set_namespace(self, "com.roundabout_host.panorama.laser_search")
-        Gtk4LayerShell.set_layer(self, Gtk4LayerShell.Layer.OVERLAY)
-
-        Gtk4LayerShell.set_anchor(self, Gtk4LayerShell.Edge.TOP, True)
-        Gtk4LayerShell.set_anchor(self, Gtk4LayerShell.Edge.BOTTOM, True)
-        Gtk4LayerShell.set_anchor(self, Gtk4LayerShell.Edge.LEFT, True)
-        Gtk4LayerShell.set_anchor(self, Gtk4LayerShell.Edge.RIGHT, True)
-        Gtk4LayerShell.set_keyboard_mode(self, Gtk4LayerShell.KeyboardMode.EXCLUSIVE)
         main_layout = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
         main_layout.set_size_request(-1, 200)
         main_layout.set_valign(Gtk.Align.CENTER)
@@ -115,6 +101,7 @@ class LaserSearchWindow(Gtk.ApplicationWindow):
         self.app_info_monitor.connect("changed", self.populate_menu_entries)
         self.populate_menu_entries()
 
+        self.fullscreen()
         self.present()
 
         self.search_entry.grab_focus()
@@ -200,7 +187,7 @@ class LaserSearchWindow(Gtk.ApplicationWindow):
 
 class LaserSearch(Gtk.Application):
     def __init__(self):
-        super().__init__(flags=Gio.ApplicationFlags.FLAGS_NONE)
+        super().__init__(flags=Gio.ApplicationFlags.FLAGS_NONE, application_id="com.roundabout_host.panorama.laser_search")
         self.connect("activate", self.on_activate)
 
     def on_activate(self, app):
